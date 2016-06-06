@@ -126,6 +126,7 @@ We encourage submissions to this list! Tutorials, libraries, articles, blog post
  - Java
    - [The Java Tutorials](http://docs.oracle.com/javase/tutorial/index.html)
    - [Java 8 API spec](http://docs.oracle.com/javase/8/docs/api/)
+   - [ElevatorJNIWrapper](https://github.com/tovine/ElevatorJNIWrapper): a (relatively thin) Java wrapper for the provided C driver. Also contains some information about the process, and how to compile C code as a shared library for dynamic linking.
  - [Scala](http://scala-lang.org/)
    - [Learn](http://scala-lang.org/documentation/)
  - [C#](https://msdn.microsoft.com/en-us/library/kx37x362.aspx?f=255&MSPPError=-2147217396)
