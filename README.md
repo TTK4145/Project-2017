@@ -79,7 +79,7 @@ Evaluation
    - You have made conscious and reasoned decisions about network topology, module responsibilities, and other design issues
    - You understand any weaknesses your design has, and how they are (or could be) addressed
    
-   A small hand-in containing diagrams and other visual aids should also be submitted. More details are yet to be determined.
+   A small hand-in containing diagrams and other visual aids should also be submitted. Details about time and place is found on blackboard.
    
  - Code Review  
    You will review other groups code, other groups will review your code and teachers will review your code. The practical details are yet to be determined.   
