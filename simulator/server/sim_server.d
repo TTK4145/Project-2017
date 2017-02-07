@@ -578,7 +578,8 @@ version(Posix){
 void stdinGetterProc(Tid receiver){
     try {
     version(Windows){
-        import core.sys.windows.windows;
+        import core.sys.windows.wincon;
+        import core.sys.windows.winbase;
 
         SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), ENABLE_PROCESSED_INPUT);
         foreach(ubyte[] buf; stdin.byChunk(1)){
