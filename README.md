@@ -12,13 +12,14 @@ Main requirements
 Be reasonable: There may be semantic hoops that you can jump through to create something that is "technically correct". But do not hesitate to contact us if you feel that something is ambiguous or missing from these requirements.
 
 No orders are lost
- - Once the light on an external button (calling an elevator to that floor; top 6 buttons on the control panel) is turned on, an elevator should arrive at that floor
- - Similarly for an internal button (telling the elevator what floor you want to exit at; front 4 buttons on the control panel), but only the elevator at that specific workspace should take the order
- - This means handling both losing network connection, losing power (both to the elevator and the machine that controls it), and software that crashes
-   - For internal orders, handling loss of power/software crash implies that the orders are executed once service is restored
+ - Once the light on an hall call button (buttons for calling an elevator to that floor; top 6 buttons on the control panel) is turned on, an elevator should arrive at that floor
+ - Similarly for a cab call (for telling the elevator what floor you want to exit at; front 4 buttons on the control panel), but only the elevator at that specific workspace should take the order
+ - This means handling network packet loss, losing network connection entirely, losing power - both to the elevator motor and the machine that controls the elevator, and software that crashes
+   - For cab orders, handling loss of power/software crash implies that the orders are executed once service is restored
    - The time used to detect these failures should be reasonable, ie. on the order of magnitude of seconds (not minutes)
- - If the elevator is disconnected from the network, it should still serve whatever orders are currently "in the system" (ie. whatever lights are showing)
-   - It should also keep serving internal orders, so that people can exit the elevator even if it is disconnected
+ - If the elevator is disconnected from the network, it should still serve all the currently active orders (ie. whatever lights are showing)
+   - It should also keep taking new cab calls, so that people can exit the elevator even if it is disconnected from the network
+   - The elevator software should not require reinitialization (manual restart) after intermittent network or motor power loss
 
 Multiple elevators should be more efficient than one
  - The orders should be distributed across the elevators in a reasonable way
@@ -28,21 +29,25 @@ Multiple elevators should be more efficient than one
  
 An individual elevator should behave sensibly and efficiently
  - No stopping at every floor "just to be safe"
- - The external "call upward" and "call downward" buttons should behave differently
+ - The hall "call upward" and "call downward" buttons should behave differently
    - Ex: If the elevator is moving from floor 1 up to floor 4 and there is a downward order at floor 3, then the elevator should not stop on its way upward, but should return back to floor 3 on its way down
  
 The lights should function as expected
- - The lights on the external buttons should show the same thing on all `n` workspaces
- - The internal lights should not be shared between elevators
+ - The lights on the hall buttons should show the same thing on all `n` workspaces
+ - The cab button lights should not be shared between elevators
+ - The cab and hall button lights should turn on as soon as is reasonable after the button has been pressed
+   - Not ever turning on the button lights because "no guarantee is offered" is not a valid solution
+   - You are allowed to expect the user to press the button again if it does not light up
  - The "door open" lamp should be used as a substitute for an actual door, and as such should not be switched on while the elevator is moving
    - The duration for keeping the door open should be in the 1-5 second range
 
  
 Start with `1 <= n <= 3` elevators, and `m == 4` floors. Try to avoid hard-coding these values: You should be able to add a fourth elevator with no extra configuration, or change the number of floors with minimal configuration. You do, however, not need to test for `n > 3` and `m != 4`.
 
+
 Unspecified behaviour
 ---------------------
-Some things are left intentionally unspecified. Their implementation will not be explicitly tested, and are therefore up to you.
+Some things are left intentionally unspecified. Their implementation will not be tested, and are therefore up to you.
 
 Which orders are cleared when stopping at a floor
  - You can clear only the orders in the direction of travel, or assume that everyone enters/exits the elevator when the door opens
@@ -50,19 +55,20 @@ Which orders are cleared when stopping at a floor
 How the elevator behaves when it cannot connect to the network during initialization
  - You can either enter a "single-elevator" mode, or refuse to start
  
-How the external (call up, call down) buttons work when the elevator is disconnected from the network
+How the hall (call up, call down) buttons work when the elevator is disconnected from the network
  - You can optionally refuse to take these new orders
  
-
-Permitted simplifications and assumptions
------------------------------------------
-Try to create something that works at a base level first, before adding more advanced features. You are of course free to include any or all (or more) of these optional features from the start.
-
-You can make these simplifications and still get full score:
- - At least one elevator is always working normally
- - Stop button & obstruction switch are disabled
+Stop button & obstruction switch are disabled
    - Their functionality (if/when implemented) is up to you.
+
+   
+Permitted assumptions
+---------------------
+
+You can make these assumptions and still get full score:
+ - At least one elevator is always working normally
  - No multiple simultaneous errors: Only one error happens at a time, but the system must still return to a fail-safe state after this error
+   - Network packet loss is not an error in this context, and must be considered regardless of any other (single) error that can occur.
  - No network partitioning: Situations where there are multiple sets of two or more elevators with no connection between them can be ignored
    
    
