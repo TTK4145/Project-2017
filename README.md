@@ -38,6 +38,7 @@ The lights should function as expected
  - The cab and hall button lights should turn on as soon as is reasonable after the button has been pressed
    - Not ever turning on the button lights because "no guarantee is offered" is not a valid solution
    - You are allowed to expect the user to press the button again if it does not light up
+ - The cab and hall button lights should turn off when the corresponding order has been serviced
  - The "door open" lamp should be used as a substitute for an actual door, and as such should not be switched on while the elevator is moving
    - The duration for keeping the door open should be in the 1-5 second range
 
